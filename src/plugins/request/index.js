@@ -40,7 +40,39 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(err)
   }
 )
+// 响应拦截
+axiosInstance.interceptors.response.use(
+  response => {
+    return response
+  },
+  err => {
+    if (err.response) {
+      const { status } = err.response
+      const nextError = { message: err.message, status }
+      if (status == 400) {
+        nextError.message = '请求参数错误'
+      } else if (status == 404) {
+        nextError.message = '接口地址不存在'
+      } else if (status == 403) {
+        nextError.message = '无权限访问'
+      } else if (status == 401) {
+        nextError.message = '登陆信息已过期，请重新登陆'
+      } else if (status == 500) {
+        nextError.message = '接口出错'
+      } else if (status == 501) {
+        // store.dispatch('loginOut', '登录失效，已回到游客模式')
+        nextError.message = 'token过期'
+      }
+      config.globalError && message.error(nextError.message)
+      return Promise.reject(nextError)
+    } else {
+      // store.dispatch('loginOut', '登录失效，已回到游客模式')
+      config.globalError && message.error(err.message || '系统异常')
+    }
 
+    return Promise.reject(err)
+  }
+)
 const requestWithData = ['post', 'put', 'patch']
 const requestWithOutData = ['get', 'option', 'delete']
 const allowMethods = [...requestWithData, ...requestWithOutData]
@@ -140,36 +172,36 @@ async function getPromiseRequest(method, serviceName, data, userConfig) {
         return Promise.reject(err)
       }
 
-      // 异常不缓存
-      if (config.fromCache) {
-        $http.cancelCache(requestIdBeforeMD5)
-      }
+      // // 异常不缓存
+      // if (config.fromCache) {
+      //   $http.cancelCache(requestIdBeforeMD5)
+      // }
 
-      if (err.response) {
-        const { status } = err.response
-        const nextError = { message: err.message, status }
-        if (status == 400) {
-          nextError.message = '请求参数错误'
-        } else if (status == 404) {
-          nextError.message = '接口地址不存在'
-        } else if (status == 403) {
-          nextError.message = '无权限访问'
-        } else if (status == 401) {
-          nextError.message = '登陆信息已过期，请重新登陆'
-        } else if (status == 500) {
-          nextError.message = '接口出错'
-        } else if (status == 501) {
-          // store.dispatch('loginOut', '登录失效，已回到游客模式')
-          nextError.message = 'token过期'
-        }
-        config.globalError && message.error(nextError.message)
-        return Promise.reject(nextError)
-      } else {
-        // store.dispatch('loginOut', '登录失效，已回到游客模式')
-        config.globalError && message.error(err.message || '系统异常')
-      }
+      // if (err.response) {
+      //   const { status } = err.response
+      //   const nextError = { message: err.message, status }
+      //   if (status == 400) {
+      //     nextError.message = '请求参数错误'
+      //   } else if (status == 404) {
+      //     nextError.message = '接口地址不存在'
+      //   } else if (status == 403) {
+      //     nextError.message = '无权限访问'
+      //   } else if (status == 401) {
+      //     nextError.message = '登陆信息已过期，请重新登陆'
+      //   } else if (status == 500) {
+      //     nextError.message = '接口出错'
+      //   } else if (status == 501) {
+      //     // store.dispatch('loginOut', '登录失效，已回到游客模式')
+      //     nextError.message = 'token过期'
+      //   }
+      //   config.globalError && message.error(nextError.message)
+      //   return Promise.reject(nextError)
+      // } else {
+      //   // store.dispatch('loginOut', '登录失效，已回到游客模式')
+      //   config.globalError && message.error(err.message || '系统异常')
+      // }
 
-      return Promise.reject(err)
+      // return Promise.reject(err)
     })
     .finally(() => {
       $http.delQueue(requestIdBeforeMD5)

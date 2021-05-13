@@ -1,8 +1,5 @@
 module.exports = {
   root: true,
-  env: {
-    node: true
-  },
   globals: {
     AMap: true,
     Stomp: true,
@@ -21,22 +18,25 @@ module.exports = {
         semi: false
       }
     ],
+    // allow async-await
+    'generator-star-spacing': 'off',
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/no-parsing-error': [
+      2,
+      {
+        'x-invalid-end-tag': false
+      }
+    ],
+    'no-undef': 'off',
+    camelcase: 'off',
     eqeqeq: 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-unused-vars': process.env.NODE_ENV === 'production' ? 'off' : 'off',
     'no-unreachable': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-callback-literal': 'off'
   },
-  overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
-      env: {
-        mocha: true
-      }
-    }
-  ]
+  parserOptions: {
+    parser: 'babel-eslint'
+  }
 }

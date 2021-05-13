@@ -138,6 +138,7 @@ export default {
   height: 100%;
   .close-con {
     position: absolute;
+    line-height: 40px;
     right: 0;
     top: 0;
     height: 100%;

@@ -1,4 +1,4 @@
 export default {
   // 登录
-  signIn: '/user/login'
+  signIn: '/auth/login'
 }

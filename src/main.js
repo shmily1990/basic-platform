@@ -9,6 +9,7 @@ import moment from 'moment'
 import _ from 'lodash'
 import './router/permission'
 import 'ant-design-vue/dist/antd.css'
+import '@/assets/iconfonts/style.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$_ = _

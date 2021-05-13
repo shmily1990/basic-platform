@@ -33,22 +33,22 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/singPage',
+    path: '/singlePage',
     component: BasicLayout,
-    name: 'singPage',
+    name: 'singlePage',
     meta: {
       authCode: '',
       authName: '单页',
       needAuth: true,
       showName: '单页'
     },
-    redirect: '/singPage',
+    redirect: '/singlePage',
     children: [
       {
-        path: '/singPage',
-        name: 'singPage',
+        path: '/singlePage',
+        name: 'singlePage',
         component: () =>
-          import(/* webpackChunkName: "singPage" */ '../views/sing-page')
+          import(/* webpackChunkName: "singPage" */ '../views/single-page')
       }
     ]
   },

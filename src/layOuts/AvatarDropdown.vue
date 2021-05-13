@@ -6,7 +6,9 @@
         src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
         class="antd-pro-global-header-index-avatar"
       />
-      <span class="text">{{ isVisitor ? '游客' : userInfo.remarkName }}</span>
+      <span class="text">{{
+        isVisitor ? '游客' : userInfo.userRemarkName
+      }}</span>
     </span>
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
@@ -87,8 +89,14 @@ export default {
   width: 108px;
   text-align: center;
   line-height: 30px;
+  display: flex;
+  align-items: center;
   .text {
     padding-left: 10px;
+    width: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

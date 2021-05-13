@@ -42,7 +42,7 @@ export default {
   watch: {
     $route(newRoute) {
       const { name, query, params, meta } = newRoute
-      if (name == 'home' || name == 'singPage') return false
+      if (name == 'home' || name == 'singlePage') return false
       console.log(666789)
       this.addTag({
         route: { name, query, params, meta },

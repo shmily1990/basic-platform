@@ -12,8 +12,7 @@ import { loginInfo, branchInfo } from '../mock/userInfo'
 import Vue from 'vue'
 import router, { resetRouter, resetNewRoute } from '@/router'
 import Vuex from 'vuex'
-import { reject } from 'q'
-import { message } from 'ant-design-vue'
+import $http from '../plugins/request'
 Vue.use(Vuex)
 
 const closePage = (state, route, flg) => {
@@ -126,21 +125,30 @@ export default new Vuex.Store({
     // 登录
     handleLogin({ commit }, { username, password }) {
       return new Promise((resolve, reject) => {
-        // 接口mock
-        setTimeout(() => {
-          const userInfo = {
-            username,
-            userId: '123456',
-            remarkName: '测试人员',
-            sinm: 'Bearer' + ' ' + '74185adsf9344555ff'
-          }
-          if (username == 'admin') {
-            userInfo.remarkName = '管理员'
-          }
-          setToken('UserInfo', userInfo)
-          commit('setUserInfo', userInfo)
-          resolve()
-        }, 1000)
+        const params = {
+          userName: username,
+          pwd: password
+        }
+        $http
+          .post('signIn', params, {
+            isMock: false,
+            transformData: false,
+            type: 'form'
+          })
+          .then(({ code, data, message }) => {
+            if (code == 0) {
+              const userInfo = { ...data, sinm: data.token }
+              setToken('UserInfo', userInfo)
+              commit('setUserInfo', userInfo)
+              resolve(data)
+            } else {
+              reject(message)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.message)
+          })
       })
     },
     getRouterInfo({ commit, state }) {

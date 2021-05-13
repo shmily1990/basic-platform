@@ -1,7 +1,7 @@
 <template>
   <div class="header" :class="{ 'home-style': isHome }">
     <div class="logo">
-      <div class="logo-text">BASIC-PLATFORM</div>
+      <div class="logo-text">基础分析平台系统</div>
     </div>
     <div class="menus">
       <header-nav></header-nav>
@@ -50,7 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  background: #4292d6;
+  // background: #4292d6;
   padding-left: 50px;
   display: flex;
   align-items: center;
@@ -58,10 +58,10 @@ export default {
   height: 50px;
   .logo {
     display: flex;
-    font-size: 33px;
-    color: #323233;
-    font-family: fantasy;
+    font-size: 25px;
+    color: #9c7171;
     flex: 1 auto;
+    font-weight: bold;
   }
   .menus {
     display: flex;

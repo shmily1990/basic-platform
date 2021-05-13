@@ -158,14 +158,18 @@ export default {
         this.$message.info('密码不能为空！')
         return false
       }
-      this.handleLogin({ username, password }).then(res => {
-        this.$emit('update:isShow', false)
-        this.isLoading = false
-        this.visible = false
-        this.$message.success('登录成功！', 1, () => {
-          this.$store.dispatch('getRouterInfo').then(() => resetNewRoute())
+      this.handleLogin({ username, password })
+        .then(res => {
+          this.$emit('update:isShow', false)
+          this.isLoading = false
+          this.visible = false
+          this.$message.success('登录成功！', 1, () => {
+            this.$store.dispatch('getRouterInfo').then(() => resetNewRoute())
+          })
         })
-      })
+        .catch(error => {
+          this.$message.error(error)
+        })
       // setTimeout(() => {
       //   const userInfo = {
       //     username,
