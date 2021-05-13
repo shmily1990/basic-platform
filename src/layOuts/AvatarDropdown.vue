@@ -6,7 +6,7 @@
         src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
         class="antd-pro-global-header-index-avatar"
       />
-      <span>{{ isVisitor ? '游客' : userInfo.remarkName }}</span>
+      <span class="text">{{ isVisitor ? '游客' : userInfo.remarkName }}</span>
     </span>
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
@@ -36,6 +36,7 @@
   </a-dropdown>
 </template>
 <script>
+import router, { resetNewRoute } from '@/router'
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 // import login from '@/views/login'
 export default {
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setTagNavStatus']),
-    ...mapActions(['loginOut']),
+    ...mapActions(['loginOut', 'changeBranchs']),
     LoginOut() {
       this.loginOut().then(async () => {
         if (this.$route.path !== '/') {
@@ -66,7 +67,12 @@ export default {
     },
     // 切换分支
     changeBranch() {
-      console.log('分支')
+      this.changeBranchs().then(async () => {
+        if (this.$route.path !== '/') {
+          await this.$router.push({ name: 'home' })
+        }
+        this.$store.dispatch('getRouterInfo2').then(() => resetNewRoute())
+      })
     }
   }
 }
@@ -76,9 +82,13 @@ export default {
   width: 100%;
 }
 .box {
-  color: #fff;
+  color: #323233;
   margin: 0 10px;
   width: 108px;
   text-align: center;
+  line-height: 30px;
+  .text {
+    padding-left: 10px;
+  }
 }
 </style>

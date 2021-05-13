@@ -14,7 +14,7 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
-  name: 'HeaderNav',
+  name: 'HomeNav',
   data() {
     return {}
   },
@@ -25,8 +25,8 @@ export default {
       return st
     },
     navList() {
-      console.log(this.routeList)
       if (this.routeList && this.routeList.length > 0) {
+        // let arr = this.routeList.splice(1, 1)
         return this.routeList
       } else {
         console.log(999)
@@ -54,18 +54,15 @@ export default {
 <style lang="scss" scoped>
 .header-nav {
   display: flex;
-  align-items: center;
+  color: #323233;
+  line-height: 40px;
+  font-size: 16px;
   > li {
-    margin: 0 10px;
-    font-size: 16px;
-    color: #fff;
-    padding: 3px 20px;
-    border-radius: 5px;
-    line-height: 30px;
-    cursor: pointer;
-  }
-  .isActive {
-    background: blue;
+    margin: 0 20px;
+    border-bottom-style: solid;
+    &.isActive {
+      border-bottom: 1px solid #888677;
+    }
   }
 }
 </style>

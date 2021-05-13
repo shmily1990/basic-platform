@@ -2,15 +2,15 @@
   <div class="model-layout">
     <a-layout id="components-layout-demo-top-side-2">
       <transition name="fade">
-        <a-layout-header class="header" v-if="!isFullscreen">
-          <Header></Header>
-        </a-layout-header>
+        <!-- <a-layout-header class="header" v-if="!isFullscreen"> -->
+        <top-header v-if="!isFullscreen"></top-header>
+        <!-- </a-layout-header> -->
       </transition>
       <a-layout>
         <a-layout-sider
           width="200"
           style="background: #fff"
-          v-if="!isFullscreen"
+          v-show="!isFullscreen"
         >
           <SiderMenu></SiderMenu>
         </a-layout-sider>
@@ -32,11 +32,12 @@ import TagsNav from '@/components/TagsNav'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import Screenfull from '@/components/Screenfull'
 import SiderMenu from '@/layOuts/SiderMenu'
-import Header from '@/layOuts/Header'
+// import Header from '@/layOuts/Header'
+import TopHeader from '@/layOuts/TopHeader'
 export default {
   name: 'quality',
   components: {
-    Header,
+    TopHeader,
     SiderMenu,
     Screenfull,
     TagsNav
@@ -44,6 +45,8 @@ export default {
   watch: {
     $route(newRoute) {
       const { name, query, params, meta } = newRoute
+      if (name == 'home' || name == 'singPage') return false
+      console.log(777789)
       this.addTag({
         route: { name, query, params, meta },
         type: 'push'

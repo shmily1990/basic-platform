@@ -8,7 +8,7 @@ import {
   removeToken,
   setToken
 } from '@/libs/util'
-import { loginInfo } from '../mock/userInfo'
+import { loginInfo, branchInfo } from '../mock/userInfo'
 import Vue from 'vue'
 import router, { resetRouter, resetNewRoute } from '@/router'
 import Vuex from 'vuex'
@@ -43,11 +43,9 @@ export default new Vuex.Store({
       if (state.userInfo == null) {
         return true
       }
-
       if (Object.keys(state.userInfo).length == 0) {
         return true
       }
-
       return false
     }
   },
@@ -83,12 +81,8 @@ export default new Vuex.Store({
         if (type === 'push') state.tagNavList.push(router)
         else {
           state.tagNavList.splice(1, 0, router)
-          // if (router.name === homeName) state.tagNavList.unshift(router)
-          // else state.tagNavList.splice(1, 0, router)
         }
         setTagNavListInLocalstorage([...state.tagNavList])
-      } else {
-        console.log(666)
       }
     },
     closeTag(state, obj) {
@@ -107,6 +101,21 @@ export default new Vuex.Store({
         removeToken('UserInfo')
         commit('setUserInfo', null)
         commit('setRouteList', null)
+        Vue.prototype.$message.success(message, 1, async () => {
+          localStorage.removeItem('routesInfo')
+          resetRouter()
+          resolve()
+        })
+      })
+    },
+    // 切换分支
+    async changeBranchs({ commit, state, dispatch }, message = '切换分支') {
+      return new Promise((resolve, reject) => {
+        if (!state.userInfo) return false
+        commit('setRouteList', null)
+        // 请除标签缓存
+        setTagNavListInLocalstorage([])
+        commit('setTagNavList', [])
         Vue.prototype.$message.success(message, 1, async () => {
           localStorage.removeItem('routesInfo')
           resetRouter()
@@ -138,10 +147,18 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         // 接口mock
         setTimeout(() => {
-          console.log(loginInfo())
           localStorage.setItem('routesInfo', JSON.stringify(loginInfo()))
           commit('SET_MEUNED')
-          console.log(state.menuSetted)
+          resolve()
+        }, 1)
+      })
+    },
+    getRouterInfo2({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        // 接口mock
+        setTimeout(() => {
+          localStorage.setItem('routesInfo', JSON.stringify(branchInfo()))
+          commit('SET_MEUNED')
           resolve()
         }, 1)
       })

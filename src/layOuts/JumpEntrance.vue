@@ -3,7 +3,7 @@
     <span class="icon"></span>
     <template v-slot:overlay>
       <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
-        <a-menu-item key="center">
+        <a-menu-item key="center" @click="change">
           <a-icon type="user" />
           爱蓝网平台
         </a-menu-item>
@@ -22,15 +22,21 @@
 </template>
 <script>
 export default {
-  name: 'avatarDrop'
+  name: 'avatarDrop',
+  methods: {
+    change() {
+      console.log(888)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 .icon {
-  width: 10px;
+  width: 5px;
   display: inline-block;
-  background: #81dac1e0;
   line-height: 30;
   border-radius: 2px;
+  height: 26px;
+  background-image: linear-gradient(to bottom right, #e8e8e8, #f1efef);
 }
 </style>

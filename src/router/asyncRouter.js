@@ -1,7 +1,6 @@
-import { constantRoutes } from './index'
+// import { constantRoutes } from './index'
 // Layout 组件是项目中的主页面，切换路由时，仅切换Layout中的组件
-import Layout from '../layOuts/Layout'
-import { resolve } from 'q'
+// import { resolve } from 'q'
 
 export function getAsyncRoutes(routes) {
   const res = []
@@ -13,12 +12,6 @@ export function getAsyncRoutes(routes) {
     if (item.component) {
       newItem.component = resolve =>
         require([`@/views/${item.component}`], resolve)
-      // if (item.component === 'Layout') {
-      //   newItem.component = Layout
-      // } else {
-      //   newItem.component = resolve =>
-      //     require([`@/views/${item.component}`], resolve)
-      // }
     }
     for (const key in item) {
       if (keys.includes(key)) {

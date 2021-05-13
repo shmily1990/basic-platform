@@ -2,29 +2,43 @@
   <div class="basic-layout">
     <a-layout>
       <transition name="fade">
-        <a-layout-header v-if="!isFullscreen">
-          <Header></Header>
-        </a-layout-header>
+        <!-- <a-layout-header class="header" v-if="!isFullscreen"> -->
+        <top-header v-if="!isFullscreen"></top-header>
+        <!-- </a-layout-header> -->
+        <!-- <top-header v-if="!isFullscreen" style="height:58px;"></top-header> -->
       </transition>
       <a-layout-content>
-        <Screenfull :value="isFullscreen" />
-        <router-view></router-view>
+        <Screenfull :value="isFullscreen" v-if="!isHome" />
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </a-layout-content>
     </a-layout>
   </div>
 </template>
 <script>
 import Screenfull from '@/components/Screenfull'
-import Header from './Header'
+import topHeader from './TopHeader'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'BasicLayout',
   components: {
-    Header,
+    topHeader,
     Screenfull
   },
+  watch: {
+    $route: {
+      handler(data) {
+        this.isHome = data.name == 'home'
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   data() {
-    return {}
+    return {
+      isHome: true
+    }
   },
   computed: {
     ...mapState(['isFullscreen'])
@@ -41,9 +55,9 @@ export default {
     height: 100%;
   }
   .ant-layout-header {
-    background: #55a5df;
+    // background: #55a5df;
     height: 50px;
-    line-height: 50px;
+    // line-height: 50px;
     padding: 0 0px 0 50px;
   }
   .fade-enter-active,

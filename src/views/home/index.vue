@@ -5,13 +5,12 @@
 </template>
 
 <script>
-// import proxyMapSingleton from '@/libs/map'
-// import proxyMapSingleton from './map.js'
 import mapConf from '@/config/map'
 import proxyMapSingleton from '@/libs/map'
 let mapIns
 export default {
   name: 'home',
+  components: {},
   data() {
     return {}
   },
@@ -33,9 +32,9 @@ export default {
       const chinaBounds = await this.getChinaBounds()
       console.log(chinaBounds)
       await mapIns.init('map', {
-        // mask: chinaBounds,
+        mask: chinaBounds,
         viewMode: '3D',
-        mapStyle: config.mapStyle,
+        mapStyle: config.mapStyleDark,
         zooms: config.zooms,
         zoom: config.visitor.initZoom,
         // center: config.visitor.initCenter,
@@ -58,6 +57,7 @@ export default {
     }
   },
   mounted() {
+    console.log(666)
     this.initMap()
   }
 }

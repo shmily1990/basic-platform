@@ -15,7 +15,7 @@ export const constantRoutes = [
   // },
   {
     path: '/',
-    component: () => import('@/layOuts/BasicLayout'),
+    component: BasicLayout,
     name: 'home',
     meta: {
       authCode: '',
@@ -29,6 +29,26 @@ export const constantRoutes = [
         path: '/home',
         name: 'home',
         component: () => import(/* webpackChunkName: "home" */ '../views/home')
+      }
+    ]
+  },
+  {
+    path: '/singPage',
+    component: BasicLayout,
+    name: 'singPage',
+    meta: {
+      authCode: '',
+      authName: '单页',
+      needAuth: true,
+      showName: '单页'
+    },
+    redirect: '/singPage',
+    children: [
+      {
+        path: '/singPage',
+        name: 'singPage',
+        component: () =>
+          import(/* webpackChunkName: "singPage" */ '../views/sing-page')
       }
     ]
   },
@@ -48,7 +68,7 @@ const router = createRouter()
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher
-  router.options.routes = [router.options.routes[0]]
+  router.options.routes = [router.options.routes[0], router.options.routes[1]]
   layoutRoute = []
 }
 
